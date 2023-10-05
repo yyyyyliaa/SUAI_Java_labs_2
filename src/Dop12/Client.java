@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public class Client {
 
-    public static ArrayList<ClientThread> blaackList = new ArrayList<>();
     private Socket socket;
     private String username;
 
@@ -54,12 +53,8 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         messageFromGroupChat = reader.readLine();
-                        String senderName = messageFromGroupChat.substring(0, messageFromGroupChat.indexOf(' ')-1);
-                        for (ClientThread user : blaackList) {
-                            if (!user.getUsername().equals(senderName)) {
-                                System.out.println(messageFromGroupChat);
-                            }
-                        }
+                        if(messageFromGroupChat.startsWith("<BL> ")) continue;
+                        System.out.println(messageFromGroupChat);
                     } catch (IOException e) {
                         closeAll(socket, reader, writer);
                     }
