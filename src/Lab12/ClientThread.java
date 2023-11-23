@@ -8,7 +8,6 @@ import java.util.HashMap;
 public class ClientThread implements Runnable{
 
     public static ArrayList<ClientThread> users = new ArrayList<>();
-    public static HashMap<String, ArrayList<ClientThread>> blacklist = new HashMap<>();
     private Socket socket;
     private String username;
 
@@ -49,12 +48,6 @@ public class ClientThread implements Runnable{
                     messageToSend = senderName + ": " + messageToSend.substring(endIndexOfReceiverName + 1);
                     messageForOne(messageToSend, receiveName, senderName);
                 }
-                else if (cleanMessage.startsWith("@blacklist ")){
-                    String messageToSend = cleanMessage.substring(10);
-                    int endIndexOfReceiverName = messageToSend.indexOf(' ');
-                    String receiveName = messageToSend.substring(0,endIndexOfReceiverName);
-
-                }
                 else messageForAll(messageFromClient);
             } catch (IOException e) {
                 closeAll(socket, reader, writer);
@@ -76,6 +69,8 @@ public class ClientThread implements Runnable{
             }
         }
     }
+
+
 
     public void messageForOne(String messageToSend, String receiverName, String senderName){
         for (ClientThread user : users) {

@@ -54,12 +54,7 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         messageFromGroupChat = reader.readLine();
-                        String senderName = messageFromGroupChat.substring(0, messageFromGroupChat.indexOf(' ')-1);
-                        for (ClientThread user : blaackList) {
-                            if (!user.getUsername().equals(senderName)) {
-                                System.out.println(messageFromGroupChat);
-                            }
-                        }
+                        System.out.println(messageFromGroupChat);
                     } catch (IOException e) {
                         closeAll(socket, reader, writer);
                     }
@@ -67,6 +62,7 @@ public class Client {
             }
         }).start();
     }
+
 
     public void closeAll(Socket socket, BufferedReader reader, BufferedWriter writer) {
         try {
